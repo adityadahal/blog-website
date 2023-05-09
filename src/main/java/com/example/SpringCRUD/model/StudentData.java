@@ -1,7 +1,13 @@
 package com.example.SpringCRUD.model;
 //import  lombok.Getter;
 
+
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 
 @Entity
 @Table(name = "parents")
@@ -10,11 +16,11 @@ public class StudentData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int parentId;
 
-    @Column(name="LastName")
+    @Column(name="last_name")
     private String lastName;
-    @Column(name="FirstName")
+    @Column(name="first_name")
     private  String firstName;
-    @Column(name="Email")
+    @Column(name="email")
     private String email;
 
 
