@@ -19,7 +19,12 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class ParentController {
     @Autowired // TODO: this works but not considered a good practice, search better options of dependency injection
-    ParentRepo parentRepo;
+    private ParentRepo parentRepo;
+    ParentController(ParentRepo parentRepo){
+        this.parentRepo = parentRepo;
+
+    }
+
 
     @PostMapping("/data")
 
