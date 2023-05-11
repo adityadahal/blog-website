@@ -23,14 +23,18 @@ public class StudentData {
     @Column(name="email")
     private String email;
 
+    @Column(name = "dob")
+    private  String dob;
+
     // TODO: add date of birth column
 
 
-    public StudentData(int parentId, String email, String firstName, String lastName) {
+    public StudentData(int parentId, String email, String firstName, String lastName, String dob) {
         this.parentId = parentId;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
 
     }
 

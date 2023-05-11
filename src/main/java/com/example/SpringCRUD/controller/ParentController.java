@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +23,12 @@ public class ParentController {
 
     @PostMapping("/data")
 
-    public String createNewData(@RequestBody StudentData studentData) {
-
+    public String createNewData(@RequestBody StudentData studentData) throws ParseException {
+        SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
+        String date = studentData.getDob();
+        java.util.Date dp = dateParser.parse(date);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        studentData.setDob(dateFormat.format(dp));
         parentRepo.save(studentData);
         return "Succesfully Saved";
     }
@@ -77,4 +83,10 @@ public class ParentController {
     public  ResponseEntity<List<StudentData>> getByfirstName(@RequestParam String firstName, String lastName){
     return  new  ResponseEntity<List<StudentData>> (parentRepo.findByFirstNameOrLastName(firstName, lastName), HttpStatus.OK);
     }
+
+    @GetMapping("/data/dob")
+        public ResponseEntity <List<StudentData>> getByDob(@RequestParam String dob){
+            return new ResponseEntity<List<StudentData>> (parentRepo.getByDob(dob), HttpStatus.OK);
+        }
+
 }
