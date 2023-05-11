@@ -23,6 +23,8 @@ public class StudentData {
     @Column(name="email")
     private String email;
 
+    // TODO: add date of birth column
+
 
     public StudentData(int parentId, String email, String firstName, String lastName) {
         this.parentId = parentId;

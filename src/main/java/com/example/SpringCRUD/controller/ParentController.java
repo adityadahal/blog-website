@@ -16,7 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class ParentController {
-    @Autowired
+    @Autowired // TODO: this works but not considered a good practice, search better options of dependency injection
     ParentRepo parentRepo;
 
     @PostMapping("/data")
@@ -58,12 +58,19 @@ public class ParentController {
       }
     }
 
+    // TODO: update details by email
+    // TODO: delete data by email
+
     @DeleteMapping("/data/{parentId}")
 
     public  String deleteData(@PathVariable int parentId){
         parentRepo.deleteById(parentId);
         return  "Deleted Succesfully !";
     }
+
+    // TODO: get the details of all the students born in certain date (2002-01-10) - take parameter in this format
+    // TODO: get the details of all the students born in certain month ("May") - take parameter in this format
+    // TODO: get the details of all the students born in certain year (1990) - take parameter in this format
 
     @GetMapping("/data/firstName")
 
