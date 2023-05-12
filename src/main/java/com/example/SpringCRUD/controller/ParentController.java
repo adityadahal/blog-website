@@ -94,4 +94,9 @@ public class ParentController {
             return new ResponseEntity<List<StudentData>> (parentRepo.getByDob(dob), HttpStatus.OK);
         }
 
+//        @GetMapping("/data/dob/year")
+//    public  ResponseEntity <List<StudentData>> getDobByYear(@RequestParam String dobYear){
+//        return  new ResponseEntity<List<StudentData>>(parentRepo.getByYear(dobYear), HttpStatus.OK);
+//        }
+
 }

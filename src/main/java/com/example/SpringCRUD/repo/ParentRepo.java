@@ -8,4 +8,6 @@ public interface ParentRepo extends JpaRepository <StudentData, Integer> {
 
     List<StudentData> findByFirstNameOrLastName(String firstName, String lastName);
     List <StudentData> getByDob(String dob);
+
+//    List<StudentData> getByYear(String year);
 }
