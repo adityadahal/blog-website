@@ -14,6 +14,9 @@ public class PaymentData {
     private  String payment_method;
     private  String total_payed;
 
+    @OneToOne(mappedBy = "paymentData")
+    private  StudentData studentData;
+
     public PaymentData(int id, String payment_method, String total_payed) {
         this.id = id;
         this.payment_method = payment_method;
