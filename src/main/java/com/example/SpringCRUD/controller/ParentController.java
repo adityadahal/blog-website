@@ -2,15 +2,13 @@ package com.example.SpringCRUD.controller;
 
 import com.example.SpringCRUD.model.StudentData;
 import com.example.SpringCRUD.repo.ParentRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +16,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class ParentController {
-    @Autowired // TODO: this works but not considered a good practice, search better options of dependency injection
-    private ParentRepo parentRepo;
+//    @Autowired
+    private final ParentRepo parentRepo;
     ParentController(ParentRepo parentRepo){
         this.parentRepo = parentRepo;
-
     }
 
 
@@ -31,9 +28,8 @@ public class ParentController {
     public String createNewData(@RequestBody StudentData studentData) throws ParseException {
         SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
         String date = studentData.getDob();
-        java.util.Date dp = dateParser.parse(date);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        studentData.setDob(dateFormat.format(dp));
+        Date dp = dateParser.parse(date);
+        studentData.setDob(dateParser.format(dp));
         parentRepo.save(studentData);
         return "Succesfully Saved";
     }
@@ -69,8 +65,6 @@ public class ParentController {
       }
     }
 
-    // TODO: update details by email
-    // TODO: delete data by email
 
     @DeleteMapping("/data/{parentId}")
 
@@ -79,9 +73,6 @@ public class ParentController {
         return  "Deleted Succesfully !";
     }
 
-    // TODO: get the details of all the students born in certain date (2002-01-10) - take parameter in this format
-    // TODO: get the details of all the students born in certain month ("May") - take parameter in this format
-    // TODO: get the details of all the students born in certain year (1990) - take parameter in this format
 
     @GetMapping("/data/firstName")
 

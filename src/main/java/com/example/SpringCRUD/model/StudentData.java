@@ -26,6 +26,9 @@ public class StudentData {
     @Column(name = "dob")
     private  String dob;
 
+    @OneToOne
+    private  PaymentData paymentData;
+
     // TODO: add date of birth column
 
 
