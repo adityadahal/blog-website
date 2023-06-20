@@ -1,7 +1,11 @@
 package com.example.SpringCRUD.controller;
 
+import com.example.SpringCRUD.dto.StudentDataDto;
+import com.example.SpringCRUD.model.PaymentData;
 import com.example.SpringCRUD.model.StudentData;
 import com.example.SpringCRUD.repo.ParentRepo;
+import com.example.SpringCRUD.repo.PaymentRepo;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,18 +22,29 @@ import java.util.Optional;
 public class ParentController {
 //    @Autowired
     private final ParentRepo parentRepo;
-    ParentController(ParentRepo parentRepo){
+    private final PaymentRepo paymentRepo;
+    private ParentController(ParentRepo parentRepo, PaymentRepo paymentRepo){
         this.parentRepo = parentRepo;
+        this.paymentRepo = paymentRepo;
     }
 
 
     @PostMapping("/data")
 
-    public String createNewData(@RequestBody StudentData studentData) throws ParseException {
+    public String createNewData(@RequestBody StudentDataDto studentDataDto) throws ParseException {
         SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
-        String date = studentData.getDob();
+        String date = studentDataDto.getDob();
         Date dp = dateParser.parse(date);
-        studentData.setDob(dateParser.format(dp));
+        studentDataDto.setDob(dateParser.format(dp));
+
+        StudentData studentData = new StudentData();
+        studentData.setDob(studentDataDto.getDob());
+        studentData.setEmail(studentDataDto.getEmail());
+        studentData.setFirstName(studentDataDto.getFirstName());
+
+        PaymentData paymentData = paymentRepo.findById(studentDataDto.getPaymentId())
+                        .orElseThrow(() -> new EntityNotFoundException("exception"));
+        studentData.setPaymentData(paymentData);
         parentRepo.save(studentData);
         return "Succesfully Saved";
     }
@@ -37,6 +52,7 @@ public class ParentController {
     @GetMapping("/data")
 
     public List<StudentData> getAllData(){
+
         return parentRepo.findAll();
     }
 
